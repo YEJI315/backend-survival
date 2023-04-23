@@ -66,3 +66,33 @@ URI라고 쓰는건 대부분 URL을 의미! 따라서 URI와 URL을 크게 구�
 5. application/xml : 범용. 자기서술적이기 어렵다. 애플리케이션과 xml을 이용해서 뭔가 작동할 수 있다는 의미. 범용이라 자기서술적이기 상대적으로 어렵다.
 6. application/atom+xml&#x20;
 7. application/json : 범용. 자기서술적이기 굉장히 어렵다. 아 나는 데이터일 뿐이야!
+
+CQS : CRUD를 중요한 특징에 따라 구분하면 Command와 Query로 나뉨. Command - Create, Update, Delete로 상태가 변하는 작업. 안전하지 않음. Query - Read로 상태가 변하지 않음. 안전하고, 분산, 캐시 등이 수월함.
+
+이 네가지를 HTTP Method를 이용해서 표현할 수 있음. (with collection pattern)
+
+1. GET -> Read
+
+ex) GET /posts : 게시물 목록. Collection 을 리드해옴. list.
+
+ex) GET /posts/{id} : 게시물 상세. Element를 리드해옴. detail.
+
+2. POST -> Create (POST는 원래 데이터 전송일 뿐)
+
+ex) POST /posts : 게시물 생성 -> post id는 generatevalue등 으로 서버에서 생성.
+
+3. PUT, PATCH -> Update (PUT은 없으면 리소스를 만들수도있는 메서드. 특정 주소를 덮어쓰기 때문에. PATCH는 일부만을 바꿀 수 있다. 나중에 둘을 구분해서 쓸 상황이 온다.)
+
+ex) PUT | PATCH /posts/{id} : 게시물 수정 (update, element)
+
+4. DELETE -> Delete 특정한 게시물 삭제 (delete, element)
+
+종종 Bulk update, Bulk delete등을 하기도 하는데 이럴 때는 collection을 활용한다.
+
+세션처럼 추상적인 개념을 리소스로 표현할 땐 그냥 뒤에 세션을 붙이면 된다.
+
+ex) POST /session 로그인&#x20;
+
+ex) GET /users/me 유저 아이디를 me라고 쓰면 현재 사용자의 아이디로 처리하게 정하고 API 스펙 문서에 기록한다.
+
+&#x20;@RequestMapping : 특정 uri로 보낸요청을 Controller에서 어떠한 방식으로 처리할지 정의를 내리는데, 이 때 들어온 요청을 특정 매서드와 매핑하기 위해 사용하는 어노테이션.
