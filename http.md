@@ -52,3 +52,9 @@ flip : 읽기 모드로 바꾸는 것. 예를 들어 버퍼에 a b c d를 담았
 4. Close : 소켓은 Closeable 이기 때문에 try-with-resources문을 이용해도 된다.
 
 try-with-resources와 try-catch-finally : try-catch-finally문은 예외 발생으로 인한 프로세스의 비정상 종료를 막고 정상적인 실행상태를 유지하기 위한 것이다. 하지만 자바 7 이전에는 try-catch-finally문을 이용할 시 finally 블록에서 null체크 후 close를 직접 호출해 자원을 반납  해야했는데, 이러한 과정은 1.자원반납으로 코드 복잡 2.번거로움 3.자원이 반납되지 않는 실수가 잦다 라는 문제점이 있었다. 이런 문제점을 해결하기 위해 try-with-resources 문법이 추가 되었다. 이 문법은 closeable을 상속받고 있는 자원이라면 try블럭이 끝나자 마자 자동으로 close 된다.
+
+Java ServerSocket : java에서 서버 프로그램을 개발할 때 쓰이는 클래스. 해당 클래스는 클라이언트에서 서버로 접속하거나 서버에서 accept 하는데 필요한 클래스임.&#x20;
+
+Blocking vs Non-Blocking : TCP소켓의 Blocking 모드는 소켓이 블록 되는 것을 의미한다. 즉, tcp 통신에서 서버가 클라이언트의 요청을 받을 준비를 하고 클라이언트의 접속을 기다리는걸 의미한다! 만약 애플리케이션이 싱글스레드 모델이라면 블록상태에서 문제가 생겼을 경우 다음 처리를 진행할 수 없기 때문에 문제가 될 수 있다. 그래서 Non-Blocking 모델이 나왔다.
+
+Non-Blocking 모델은 소켓이 블록 되지 않고 즉시 소켓의 상태를 반환한다. 이렇게 되면 소켓의 상태를 주기적으로 체크하고 다른 처리를 진행할 수 있게 된다.
