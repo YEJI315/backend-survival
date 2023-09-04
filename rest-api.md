@@ -66,32 +66,74 @@ HATEOAS 관련
 6. application/atom+xml&#x20;
 7. application/json : 범용. 자기서술적이기 굉장히 어렵다. 아 나는 데이터일 뿐이야!
 
+## Collection Pattern
+
+대부분의 경우, 여러 리소스를 하나의 그룹으로 묶을 수 있다. 예를 들어 게시물의 경우, 100개의 게시물을 하나의 게시물 그룹으로 묶어서 표현하는 게 훨씬 유용하다.
+
+'/posts/{id}/edit' 이런 식으로 페이지를 수정 요청 하고 싶다면 '/posts/{id}'로 요청을 날리고 patch로 받으면 된다! 웬만하면 /items, /items/{id} 와 같은 url만 사용해도 무방하다.
+
+어떤 리소스를 잡느냐에 따라서 훨씬 자연스러운 표현이 가능함. ex)/posts/{id}/edit ⇒ “Edit Page”라는 리소스. 마찬가지로 /edit?post\_id={post\_id} 형태로 써줄 수도 있다. 다만, /comments/{id}/edit 같은 게 도입될 경우 /edit?comment\_id={comment\_id} 같은 것과 구분해서 처리하는 게 복잡할 수 있다. 만약 편집 페이지의 유형을 Edit ID 따위로 표현하고 싶다면, /edits/post, /edits/comment 같이 컬렉션 패턴과 복수형을 사용할 수 있다. 하지만 이렇게 하고 싶다면 edit보다는 그냥 page란 리소스를 사용하는 걸 추천. Page란 리소스, 그리고 Page ID란 모양이 훨씬 명확하다. 이렇게 하면 /pages/edit-post, /pages/edit-comment 같이 훨씬 자연스럽게 표현할 수 있게 된다.
+
 CQS : CRUD를 중요한 특징에 따라 구분하면 Command와 Query로 나뉨. Command - Create, Update, Delete로 상태가 변하는 작업. 안전하지 않음. Query - Read로 상태가 변하지 않음. 안전하고, 분산, 캐시 등이 수월함.
 
-이 네가지를 HTTP Method를 이용해서 표현할 수 있음. (with collection pattern)
+이 네가지를 HTTP Method를 이용해서 표현할 수 있음. (<mark style="color:blue;">with collection pattern</mark>)
 
 1. GET -> Read
 
-ex) GET /posts : 게시물 목록. Collection 을 리드해옴. list.
+ex) GET /posts : 게시물 목록. Collection 을 리드해옴. list. 습관적인  표현일 뿐 필수는 아님.
 
-ex) GET /posts/{id} : 게시물 상세. Element를 리드해옴. detail.
+ex) GET /posts/{id} : 게시물 상세. Element를 리드해옴. detail. 습관적인  표현일 뿐 필수는 아님.
 
 2. POST -> Create (POST는 원래 데이터 전송일 뿐)
 
-ex) POST /posts : 게시물 생성 -> post id는 generatevalue등 으로 서버에서 생성.
+ex) POST /posts : 게시물 생성 -> post id는 generatevalue등 으로 자동으로 서버에서 생성.
 
-3. PUT, PATCH -> Update (PUT은 없으면 리소스를 만들수도있는 메서드. 특정 주소를 덮어쓰기 때문에. PATCH는 일부만을 바꿀 수 있다. 나중에 둘을 구분해서 쓸 상황이 온다.)
+3. PUT, PATCH -> Update (PUT은 없으면 리소스를 만들수도있는 메서드. 특정 주소를 덮어쓰기 때문에. PATCH는 일부만을 바꿀 수 있다. 나중에 둘을 구분해서 쓸 상황이 온다.)&#x20;
 
 ex) PUT | PATCH /posts/{id} : 게시물 수정 (update, element)
 
 4. DELETE -> Delete 특정한 게시물 삭제 (delete, element)
 
-종종 Bulk update, Bulk delete등을 하기도 하는데 이럴 때는 collection을 활용한다.
+종종 Bulk update, Bulk delete등을 하기도 하는데 이럴 때는 collection을 활용한다. -> collection을 어떻게 넘길 것인지는 API 문서에 정확히 명시 해 놓아야 한다.
 
 세션처럼 추상적인 개념을 리소스로 표현할 땐 그냥 뒤에 세션을 붙이면 된다.
 
 ex) POST /session 로그인&#x20;
 
 ex) GET /users/me 유저 아이디를 me라고 쓰면 현재 사용자의 아이디로 처리하게 정하고 API 스펙 문서에 기록한다.
+
+EX) 댓글
+
+그냥 바로 comments로 시작하는 경우:
+
+1. `GET /comments` → 전체 댓글 목록
+2. `GET /comments?post_id={post_id}` → 특정 게시물에 대한 댓글 목록
+3. `GET /comments/{id}` → 댓글 상세
+4. `POST /comments` → 댓글 생성 ⇒ 어떤 게시물에 대해? → Body에 Post ID 정보를 담아줘야 함.(스펙으로 정의 필요)
+5. `POST /comments?post_id={post_id}` → 특정 게시물에 대한 댓글 생성
+6. `PUT 또는 PATCH /comments/{id}` → 댓글 수정
+7. `DELETE /comments/{id}` → 댓글 삭제
+
+특정 게시물 아래로 표현하는 경우:
+
+1. `GET /posts/{post_id}/comments` → 특정 게시물에 대한 댓글 목록
+2. `GET /posts/{post_id}/comments/{id}` → 특정 게시물에 달린 특정 댓글 상세
+3. `POST /posts/{post_id}/comments` → 특정 게시물에 대한 댓글 작성
+4. `PUT 또는 PATCH /posts/{post_id}/comments/{id}` → 특정 게시물에 달린 특정 댓글 수정
+5. `DELETE /posts/{post_id}/comments/{id}` → 특정 게시물에 달린 특정 댓글 삭제
+
+EX) 로그인
+
+#### 로그인/로그아웃
+
+로그인과 로그아웃을 어떻게 리소스로 표현할 수 있을까? 이럴 때는 추상적인 개념인 “**세션**”을 도입하곤 한다.
+
+1. `POST /session` → 세션 생성 = 로그인
+2. `DELETE /session` → 세션 파괴 = 로그아웃
+
+덤으로…
+
+1. `GET /session` → 세션 확인 → 내 정보 확인?
+2. `GET /users/me` → User ID를 me라고 쓰면, 현재 사용자의 User ID로 처리하게 정하고, API 스펙 문서에 기록.
 
 &#x20;@RequestMapping : 특정 uri로 보낸요청을 Controller에서 어떠한 방식으로 처리할지 정의를 내리는데, 이 때 들어온 요청을 특정 매서드와 매핑하기 위해 사용하는 어노테이션.
