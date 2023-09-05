@@ -137,3 +137,5 @@ EX) 로그인
 2. `GET /users/me` → User ID를 me라고 쓰면, 현재 사용자의 User ID로 처리하게 정하고, API 스펙 문서에 기록.
 
 &#x20;@RequestMapping : 특정 uri로 보낸요청을 Controller에서 어떠한 방식으로 처리할지 정의를 내리는데, 이 때 들어온 요청을 특정 매서드와 매핑하기 위해 사용하는 어노테이션.
+
+@RequestBody : HttpRequest 본문을 전송 또는 도메인 객체에 매핑하여 인바운드 HttpRequest 본문을 Java 객체로 자동 역직렬화 할 수 있도록 하는 어노테이션.
