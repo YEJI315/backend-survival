@@ -139,3 +139,15 @@ EX) 로그인
 &#x20;@RequestMapping : 특정 uri로 보낸요청을 Controller에서 어떠한 방식으로 처리할지 정의를 내리는데, 이 때 들어온 요청을 특정 매서드와 매핑하기 위해 사용하는 어노테이션.
 
 @RequestBody : HttpRequest 본문을 전송 또는 도메인 객체에 매핑하여 인바운드 HttpRequest 본문을 Java 객체로 자동 역직렬화 할 수 있도록 하는 어노테이션.
+
+@ExceptionHandler : @Controller나 @RestController 어노테이션이 붙어있는 클래스에서 발생하는 에러를 잡아서 메소드로 처리해주는 기능을 제공한다. @ExceptionHandler의 value 값으로 구체적인 예외 클래스를 지정해주면 해당 어노테이션이 붙은 메소드에서 그 예외를 처리해준다.
+
+@ResponseEntity : 스프링 프레임워크에는 HTTP Request 혹은 Response를 나타내기 위해 제공하는 HttpEntity라는 클래스가 존재한다. HttpEntity는 HttpHeader와 HttpBody를 포함하는 클래스임. 이 HttpEntity를 상속하여 추가적으로 HttpStatus 속성을 가지는 클래스가 ResponseEntity 클래스. 제네릭으로 선언되어 있으며 해당 부분은 HttpBody의 타입을 나타낸다.
+
+제네릭 : 제네릭(Generic)은 직역하자면 '일반적인'이라는 뜻이다. 음.. 한 번에 이해가 가진 않는다. 조금 더 부연설명을 하자면 '데이터 형식에 의존하지 않고, 하나의 값이 여러 다른 데이터 타입들을 가질 수 있도록 하는 방법'이다.
+
+우리가 흔히 쓰는 ArrayList, LinkedList 등을 생성할 때 어떻게 쓰는가?
+
+객체<타입> 객체명 = new 객체<타입>(); 이렇게 쓰지 않는가? <>괄호 안에 들어가는 타입을 지정해준다.생각해보자. 만약에 우리가 어떤 자료구조를 만들어 배포하려고 한다. 그런데 String 타입도 지원하고싶고 Integer타입도 지원하고 싶고 많은 타입을 지원하고 싶다. 그러면 String에 대한 클래스, Integer에 대한 클래스 등 하나하나 타입에 따라 만들 것인가? 그건 너무 비효율적이다. 이러한 문제를 해결하기 위해 우리는 제네릭이라는 것을 사용한다. 이렇듯 제네릭(Generic)은 클래스 내부에서 지정하는 것이 아닌 외부에서 사용자에 의해 지정되는 것을 의미한다. 한마디로 특정(Specific) 타입을 미리 지정해주는 것이 아닌 필요에 의해 지정할 수 있도록 하는 일반(Generic) 타입이라는 것이다. 정확히 말하자면 지정된다는 것 보다는 타입의 경계를 지정하고, 컴파일 때 해당 타입으로 캐스팅하여 매개변수화 된 유형을 삭제하는 것이다.
+
+@ResponseStatus : ResponseEntity를 사용하면 HttpStatus, HttpHeader, HttpBody를 표현할 수 있음. 이 중에서 HttpStatus를 다른 방식으로 표현할 수 있는게 ResponseStatus.
