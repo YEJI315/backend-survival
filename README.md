@@ -2,32 +2,32 @@
 # init
 
 ### 쇼핑몰 REST API 설계
-    ####1. 로그인/회원가입 자원 members
-    ##### - 로그인 : members/login -> getmapping
-    ##### - 로그아웃 : members/logout -> patchmapping
-    ##### - 회원가입 : members/join -> postmapping
+    1. 로그인/회원가입 자원 members
+     - 로그인 : members/login -> getmapping
+     - 로그아웃 : members/logout -> patchmapping
+     - 회원가입 : members/join -> postmapping
 
-    ####2. 내정보 자원 members
-    ##### - 내 정보 조회 : members/{id} -> getmapping
-    ##### - 내 정보 수정 : members/{id} -> patchmapping
+    2. 내정보 자원 members
+     - 내 정보 조회 : members/{id} -> getmapping
+     - 내 정보 수정 : members/{id} -> patchmapping
 
-    ####3. 상품 자원 products
-    ##### - 상품 목록 : products/ -> getmapping
-    ##### - 상품 상세 : products/{id} -> getmapping
+    3. 상품 자원 products
+     - 상품 목록 : products/ -> getmapping
+     - 상품 상세 : products/{id} -> getmapping
 
-    ####4. 상품리뷰 자원 review
-    ##### - 상품에 리뷰 작성 : review/{id} -> postmapping
-    ##### - 상품에 리뷰 수정 : review/{id} -> patchmapping
-    ##### - 상품에 리뷰 삭제 : review/{id} -> deletemapping
+    4. 상품리뷰 자원 review
+     - 상품에 리뷰 작성 : review/{id} -> postmapping
+     - 상품에 리뷰 수정 : review/{id} -> patchmapping
+     - 상품에 리뷰 삭제 : review/{id} -> deletemapping
 
-    ####5. 장바구니 자원 cart
-    ##### - 장바구니에 상품 추가 : cart/{id} -> postmapping, patchmapping
-    ##### - 장바구니에 상품 삭제 : cart/{id} -> deletemapping
-    ##### - 장바구니 (담긴 상품 목록) : cart/{id} -> getmapping
+    5. 장바구니 자원 cart
+     - 장바구니에 상품 추가 : cart/{id} -> postmapping, patchmapping
+     - 장바구니에 상품 삭제 : cart/{id} -> deletemapping
+     - 장바구니 (담긴 상품 목록) : cart/{id} -> getmapping
 
-    ####6. 구매 자원 orders
-    ##### - 주문하기 : orders/{id} -> postmapping, patchmapping
-    ##### - 주문 목록 : orders/{id} -> getmapping
+    6. 구매 자원 orders
+     - 주문하기 : orders/{id} -> postmapping, patchmapping
+     - 주문 목록 : orders/{id} -> getmapping
 
 
 
