@@ -2,10 +2,10 @@
 # init
 
 ### 쇼핑몰 REST API 설계
-    1. 로그인/회원가입 자원 members
-     - 로그인 : members/login -> getmapping
-     - 로그아웃 : members/logout -> patchmapping
-     - 회원가입 : members/join -> postmapping
+    1. 로그인/회원가입 자원 user
+     - 로그인 : user/login -> getmapping
+     - 로그아웃 : user/logout -> patchmapping
+     - 회원가입 : user/join -> postmapping
 
     2. 내정보 자원 members
      - 내 정보 조회 : members/{id} -> getmapping
@@ -26,8 +26,8 @@
      - 장바구니 (담긴 상품 목록) : cart/{id} -> getmapping
 
     6. 구매 자원 orders
-     - 주문하기 : orders/{id} -> postmapping, patchmapping
-     - 주문 목록 : orders/{id} -> getmapping
+     - 주문하기 : orders/{id}/action -> postmapping, patchmapping
+     - 주문 목록 : orders/{id}/list -> getmapping
 
 
 
