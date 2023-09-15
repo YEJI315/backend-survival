@@ -3,7 +3,7 @@
 
 ### 쇼핑몰 REST API 설계
     1. 로그인/회원가입 자원 user
-     - 로그인 : user/login -> getmapping
+     - 로그인 : user/login -> postmapping select 중 로그인만 postmapping이다. 로그인은 너무 중요한 정보라 주소에 담기면 안됨. postmapping으로 사용자 정보가 있나 없나를 체크. 
      - 로그아웃 : user/logout -> patchmapping
      - 회원가입 : user/join -> postmapping
 
